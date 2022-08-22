@@ -7,7 +7,7 @@ ADD https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz /tmp
 RUN tar xf /tmp/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz -C /usr/bin && \
     tar xf /tmp/helm-v${HELM_VERSION}-linux-amd64.tar.gz -C /usr/bin && \
     wget https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 -O /usr/bin/sops && \
-    chmod a+x /usr/bin/sops                          && \
+    chmod a+x /usr/bin/sops
 
 FROM google/cloud-sdk:398.0.0-alpine@sha256:282aa5efa274bd99f2ede0b07807994525282c9d6facc764fc22521e521fae83
 COPY --from=0 /usr/bin/kustomize /usr/bin/kustomize

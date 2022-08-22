@@ -4,7 +4,7 @@
 You can manually build the Docker image with the following command:
 
 ```bash
-docker build . -t muehlemannpopp/gke-deploy-tools:latest \
+docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
        --build-arg KUSTOMIZE_VERSION=4.5.7 \
        --build-arg SOPS_VERSION=3.7.3      \
        --build-arg HELM_VERSION=3.9.3
