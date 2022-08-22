@@ -1,0 +1,9 @@
+.direnv
+.envrc
+.git
+.github
+.gitignore
+LICENSE
+README.*
+flake.lock
+flake.nix
