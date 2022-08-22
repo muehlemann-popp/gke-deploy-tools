@@ -42,8 +42,6 @@ jobs:
         id: tag
         run: |
           echo "tags=${{ steps.meta.output.tags }}"
-          # TAG=$(echo "${{steps.meta.output.tags}}" | cut -d  )
-          # echo "::set-output name=tag::${${{steps.meta.outputs.tags}"
       - name: Login to DockerHub
         if: github.event_name == 'release'
         uses: docker/login-action@v2
