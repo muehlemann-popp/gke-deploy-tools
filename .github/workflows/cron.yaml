@@ -1,0 +1,19 @@
+on:
+  schedule:
+    - cron: '30 5 * * *'
+jobs:
+  build:
+    name: Image scane
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'docker.io/muehlemannpopp/gke-deploy-tools:latest'
+          format: 'sarif'
+          output: 'trivy-image-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-image-results.sarif'
