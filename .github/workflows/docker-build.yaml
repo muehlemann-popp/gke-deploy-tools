@@ -44,6 +44,7 @@ jobs:
           echo "tags=${{ steps.meta.outputs.tags }}"
           tag=$(echo "${{ steps.meta.outputs.tags }}" | head -n 1)
           echo "tag=$tag"
+          echo "::set-output name=tag::${tag}"
       - name: Login to DockerHub
         if: github.event_name == 'release'
         uses: docker/login-action@v2
@@ -60,7 +61,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.meta.outputs.tags[0] || steps.meta.outputs.tags }}
+          image-ref: ${{ steps.tag.outputs.tag }}
           timeout: 10m
 
   configscan:
