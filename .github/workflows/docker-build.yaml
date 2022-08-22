@@ -55,6 +55,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ steps.meta.outputs.tags }}
+          timeout: 10m
 
   configscan:
     name: Configuration Scan
@@ -69,6 +70,7 @@ jobs:
           scan-type: 'config'
           hide-progress: false
           format: 'sarif'
+          timeout: 10m
           output: 'trivy-results.sarif'
           exit-code: '1'
           ignore-unfixed: true
