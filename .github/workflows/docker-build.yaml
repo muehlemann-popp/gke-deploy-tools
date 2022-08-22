@@ -55,7 +55,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: ${{ github.event_name == 'release' }}
-          load: true
+          load: ${{ github.event_name != 'release' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Run Trivy vulnerability scanner
