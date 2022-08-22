@@ -1,13 +1,5 @@
-- [Build image](#sec-1)
-- [Push image](#sec-2)
-- [Checking the version of the dependencies](#sec-3)
-  - [Google Cloud SDK](#sec-3-1)
-  - [Kustomize](#sec-3-2)
-  - [Sops](#sec-3-3)
-  - [Helm](#sec-3-4)
 
-
-# Build image<a id="sec-1"></a>
+# Build image
 
 You can manually build the Docker image with the following command:
 
@@ -18,7 +10,7 @@ docker build . -t muehlemannpopp/gke-deploy-tools:latest \
        --build-arg HELM_VERSION=3.9.3
 ```
 
-# Push image<a id="sec-2"></a>
+# Push image
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:398.0.0 \
@@ -27,27 +19,27 @@ docker push muehlemannpopp/gke-deploy-tools:398.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
-# Checking the version of the dependencies<a id="sec-3"></a>
+# Checking the version of the dependencies
 
-## Google Cloud SDK<a id="sec-3-1"></a>
+## Google Cloud SDK
 
 The latest base image version can be checked here:
 
 <https://hub.docker.com/r/google/cloud-sdk/tags>
 
-## Kustomize<a id="sec-3-2"></a>
+## Kustomize
 
 The latest `kustomize` version can be checked here:
 
 <https://github.com/kubernetes-sigs/kustomize/releases>
 
-## Sops<a id="sec-3-3"></a>
+## Sops
 
 The latest `sops` version can be checked here:
 
 <https://github.com/mozilla/sops/releases>
 
-## Helm<a id="sec-3-4"></a>
+## Helm
 
 The latest `Helm` version can be checked here:
 
