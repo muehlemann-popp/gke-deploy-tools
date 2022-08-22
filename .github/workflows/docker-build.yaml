@@ -41,7 +41,7 @@ jobs:
       - name: First tag
         id: tag
         run: |
-          echo "tags=${{ steps.meta.output.tags }}"
+          echo "tags=${{ steps.meta.outputs.tags }}"
       - name: Login to DockerHub
         if: github.event_name == 'release'
         uses: docker/login-action@v2
