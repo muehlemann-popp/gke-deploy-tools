@@ -11,6 +11,7 @@ jobs:
         with:
           image-ref: 'docker.io/muehlemannpopp/gke-deploy-tools:latest'
           format: 'sarif'
+          timeout: 10m
           output: 'trivy-image-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab
