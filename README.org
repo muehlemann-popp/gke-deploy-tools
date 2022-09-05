@@ -28,9 +28,9 @@ You can manually build the Docker image with the following command:
 * Push image
 
 #+begin_src bash
-  docker tag muehlemannpopp/gke-deploy-tools:399.0.0 \
+  docker tag muehlemannpopp/gke-deploy-tools:400.0.0 \
          muehlemannpopp/gke-deploy-tools:latest
-  docker push muehlemannpopp/gke-deploy-tools:399.0.0
+  docker push muehlemannpopp/gke-deploy-tools:400.0.0
   docker push muehlemannpopp/gke-deploy-tools:latest
 #+end_src
 
