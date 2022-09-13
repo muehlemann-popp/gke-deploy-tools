@@ -13,9 +13,9 @@ docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
 # Push image
 
 ```bash
-docker tag muehlemannpopp/gke-deploy-tools:400.0.0 \
-       muehlemannpopp/gke-deploy-tools:latest
-docker push muehlemannpopp/gke-deploy-tools:400.0.0
+docker tag muehlemannpopp/gke-deploy-tools:latest \
+       muehlemannpopp/gke-deploy-tools:401.0.0
+docker push muehlemannpopp/gke-deploy-tools:401.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
