@@ -29,8 +29,8 @@ You can manually build the Docker image with the following command:
 
 #+begin_src bash
   docker tag muehlemannpopp/gke-deploy-tools:latest \
-         muehlemannpopp/gke-deploy-tools:401.0.0
-  docker push muehlemannpopp/gke-deploy-tools:401.0.0
+         muehlemannpopp/gke-deploy-tools:402.0.0
+  docker push muehlemannpopp/gke-deploy-tools:402.0.0
   docker push muehlemannpopp/gke-deploy-tools:latest
 #+end_src
 
@@ -42,11 +42,52 @@ The latest base image version can be checked here:
 
 https://hub.docker.com/r/google/cloud-sdk/tags
 
+#+name: get-cloud-sdk-tags
+#+begin_src restclient :exports none :results value
+  GET https://registry.hub.docker.com/v2/repositories/google/cloud-sdk/tags
+#+end_src
+
+#+name: get-latest-cloud-sdk-tag
+#+begin_src elisp :var tags=get-cloud-sdk-tags() :results output raw :exports results
+  (let-alist (seq-find (lambda (tag-data)
+                         (string-suffix-p "-alpine" (alist-get 'name tag-data)))
+                       (alist-get 'results (json-read-from-string tags)))
+    (princ (format "Latest alpine image tag is =%s= updated at /%s/.\n\nThe digest is =%s=."
+                   .name
+                   .last_updated
+                   .digest)))
+#+end_src
+
+#+RESULTS: get-latest-cloud-sdk-tag
+Latest alpine image tag is =402.0.0-alpine= updated at /2022-09-14T14:44:28.483417Z/.
+
+The digest is =sha256:20ec5831f167b1e1283348a98651b1068fa46cabad4c349758be75038e55df8a=.
+
 ** Kustomize
 
 The latest ~kustomize~ version can be checked here:
 
 https://github.com/kubernetes-sigs/kustomize/releases
+
+#+name: get-github-releases
+#+begin_src restclient :exports none :results value :var repo="kubernetes-sigs/kustomize"
+  GET https://api.github.com/repos/:repo/releases
+  Accept: application/vnd.github+json
+  User-Agent: emacs-org-mode
+#+end_src
+
+#+name: get-latest-kustomize-release
+#+begin_src elisp :var releases=get-github-releases(repo="kubernetes-sigs/kustomize") :results output raw :exports results
+  (let-alist (seq-find (lambda (release-data)
+                         (string-prefix-p "kustomize" (alist-get 'name release-data)))
+                       (json-read-from-string releases))
+    (princ (format "Latest kustomize release is =%s= published at /%s/."
+                   .name
+                   .published_at)))
+#+end_src
+
+#+RESULTS: get-latest-kustomize-release
+Latest kustomize release is =kustomize/v4.5.7= published at /2022-08-02T16:39:10Z/.
 
 ** Sops
 
@@ -54,8 +95,34 @@ The latest ~sops~ version can be checked here:
 
 https://github.com/mozilla/sops/releases
 
+#+name: get-latest-sops-release
+#+begin_src elisp :var releases=get-github-releases(repo="mozilla/sops") :results output raw :exports results
+  (let-alist (seq-find (lambda (release-data)
+                         (string-prefix-p "v" (alist-get 'name release-data)))
+                       (json-read-from-string releases))
+    (princ (format "Latest sops release is =%s= published at /%s/."
+                   .name
+                   .published_at)))
+#+end_src
+
+#+RESULTS: get-latest-sops-release
+Latest sops release is =v3.7.3= published at /2022-05-09T17:37:50Z/.
+
 ** Helm
 
 The latest ~Helm~ version can be checked here:
 
 https://github.com/helm/helm/releases
+
+#+name: get-latest-helm-release
+#+begin_src elisp :var releases=get-github-releases(repo="helm/helm") :results output raw :exports results
+  (let-alist (seq-find (lambda (release-data)
+                         (string-prefix-p "Helm" (alist-get 'name release-data)))
+                       (json-read-from-string releases))
+    (princ (format "Latest Helm release is =%s= published at /%s/."
+                   .name
+                   .published_at)))
+#+end_src
+
+#+RESULTS: get-latest-helm-release
+Latest Helm release is =Helm 3.9.4= published at /2022-08-24T20:00:15Z/.
