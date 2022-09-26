@@ -7,15 +7,15 @@ You can manually build the Docker image with the following command:
 docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
        --build-arg KUSTOMIZE_VERSION=4.5.7 \
        --build-arg SOPS_VERSION=3.7.3      \
-       --build-arg HELM_VERSION=3.9.4
+       --build-arg HELM_VERSION=3.10.0
 ```
 
 # Push image
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:latest \
-       muehlemannpopp/gke-deploy-tools:402.0.0
-docker push muehlemannpopp/gke-deploy-tools:402.0.0
+       muehlemannpopp/gke-deploy-tools:403.0.0
+docker push muehlemannpopp/gke-deploy-tools:403.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
