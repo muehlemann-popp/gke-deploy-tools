@@ -1,4 +1,4 @@
-FROM google/cloud-sdk:403.0.0-alpine@sha256:3791683bade5ec26f37527d09cd531a617c0fb96da89154eb2b0484c97020f4a
+FROM google/cloud-sdk:404.0.0-alpine@sha256:9f002ad4b9c14026b84e4ac5684c0aff4f167acb7982c32be2db45798f70ba8c
 ARG KUSTOMIZE_VERSION=4.5.7
 ARG SOPS_VERSION=3.7.3
 ARG HELM_VERSION=3.10.0
@@ -9,7 +9,7 @@ RUN tar xf /tmp/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz -C /usr/bin &
     wget https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 -O /usr/bin/sops && \
     chmod a+x /usr/bin/sops
 
-FROM google/cloud-sdk:403.0.0-alpine@sha256:3791683bade5ec26f37527d09cd531a617c0fb96da89154eb2b0484c97020f4a
+FROM google/cloud-sdk:404.0.0-alpine@sha256:9f002ad4b9c14026b84e4ac5684c0aff4f167acb7982c32be2db45798f70ba8c
 COPY --from=0 /usr/bin/kustomize /usr/bin/kustomize
 COPY --from=0 /usr/bin/linux-amd64/helm /usr/bin/helm
 COPY --from=0 /usr/bin/sops /usr/bin/sops
