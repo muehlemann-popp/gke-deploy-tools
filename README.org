@@ -22,15 +22,15 @@ You can manually build the Docker image with the following command:
   docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
          --build-arg KUSTOMIZE_VERSION=4.5.7 \
          --build-arg SOPS_VERSION=3.7.3      \
-         --build-arg HELM_VERSION=3.10.0
+         --build-arg HELM_VERSION=3.10.1
 #+end_src
 
 * Push image
 
 #+begin_src bash
   docker tag muehlemannpopp/gke-deploy-tools:latest \
-         muehlemannpopp/gke-deploy-tools:405.0.0
-  docker push muehlemannpopp/gke-deploy-tools:405.0.0
+         muehlemannpopp/gke-deploy-tools:405.0.1
+  docker push muehlemannpopp/gke-deploy-tools:405.0.1
   docker push muehlemannpopp/gke-deploy-tools:latest
 #+end_src
 
@@ -40,10 +40,10 @@ You can manually build the Docker image with the following command:
 #+caption: Depency versions
 | dependency   | version          | last updated                | digest                                                                  |
 |--------------+------------------+-----------------------------+-------------------------------------------------------------------------|
-| google-cloud | 405.0.0-alpine   | 2022-10-07T15:47:58.521159Z | sha256:6e09a85ea6bd648fad7c1702787a5aa181d454e3dfeb8ce6f2d1f0f32223ed1e |
+| google-cloud | 405.0.1-alpine   | 2022-10-15T03:52:58.297609Z | sha256:77207b98e72f8cc2ee6fe3f5ee2c06c1079c8822ef22ca20756dd8f9958b6c29 |
 | kustomize    | kustomize/v4.5.7 | 2022-08-02T16:39:10Z        |                                                                         |
 | sops         | v3.7.3           | 2022-05-09T17:37:50Z        |                                                                         |
-| Helm         | Helm 3.10.0      | 2022-09-21T17:32:35Z        |                                                                         |
+| Helm         | Helm 3.10.1      | 2022-10-12T20:51:20Z        |                                                                         |
 #+TBLFM: @2$2='(org-sbe get-latest-cloud-sdk-tag (field 'name))::@2$3='(org-sbe get-latest-cloud-sdk-tag (field 'last_updated))::@2$4='(org-sbe get-latest-cloud-sdk-tag (field 'digest))::@3$2='(org-sbe get-latest-kustomize-release (field 'name))::@3$3='(org-sbe get-latest-kustomize-release (field 'published_at))::@4$2='(org-sbe get-latest-sops-release (field 'name))::@4$3='(org-sbe get-latest-sops-release (field 'published_at))::@5$2='(org-sbe get-latest-helm-release (field 'name))::@5$3='(org-sbe get-latest-helm-release (field 'published_at))
 
 ** Google Cloud SDK
@@ -120,4 +120,5 @@ https://github.com/helm/helm/releases
 
 # Local Variables:
 # org-confirm-babel-evaluate: nil
+# org-export-babel-evaluate: nil
 # End:

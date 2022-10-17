@@ -7,15 +7,15 @@ You can manually build the Docker image with the following command:
 docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
        --build-arg KUSTOMIZE_VERSION=4.5.7 \
        --build-arg SOPS_VERSION=3.7.3      \
-       --build-arg HELM_VERSION=3.10.0
+       --build-arg HELM_VERSION=3.10.1
 ```
 
 # Push image
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:latest \
-       muehlemannpopp/gke-deploy-tools:405.0.0
-docker push muehlemannpopp/gke-deploy-tools:405.0.0
+       muehlemannpopp/gke-deploy-tools:405.0.1
+docker push muehlemannpopp/gke-deploy-tools:405.0.1
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
@@ -23,10 +23,12 @@ docker push muehlemannpopp/gke-deploy-tools:latest
 
 | dependency   | version          | last updated                | digest                                                                  |
 |------------ |---------------- |--------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 405.0.0-alpine   | 2022-10-07T15:47:58.521159Z | sha256:6e09a85ea6bd648fad7c1702787a5aa181d454e3dfeb8ce6f2d1f0f32223ed1e |
+#+tblname: dependency-versions
+#+caption: Depency versions
+| google-cloud | 405.0.1-alpine   | 2022-10-15T03:52:58.297609Z | sha256:77207b98e72f8cc2ee6fe3f5ee2c06c1079c8822ef22ca20756dd8f9958b6c29 |
 | kustomize    | kustomize/v4.5.7 | 2022-08-02T16:39:10Z        |                                                                         |
 | sops         | v3.7.3           | 2022-05-09T17:37:50Z        |                                                                         |
-| Helm         | Helm 3.10.0      | 2022-09-21T17:32:35Z        |                                                                         |
+| Helm         | Helm 3.10.1      | 2022-10-12T20:51:20Z        |                                                                         |
 
 ## Google Cloud SDK
 
@@ -34,11 +36,37 @@ The latest base image version can be checked here:
 
 <https://hub.docker.com/r/google/cloud-sdk/tags>
 
+```restclient
+GET https://registry.hub.docker.com/v2/repositories/google/cloud-sdk/tags
+```
+
+```elisp
+;; supported fields: name, last_updated, digest
+(let ((tag-data (seq-find (lambda (tag-data)
+                            (string-suffix-p "-alpine" (alist-get 'name tag-data)))
+                          (alist-get 'results (json-read-from-string tags)))))
+  (alist-get field tag-data))
+```
+
 ## Kustomize
 
 The latest `kustomize` version can be checked here:
 
 <https://github.com/kubernetes-sigs/kustomize/releases>
+
+```restclient
+GET https://api.github.com/repos/:repo/releases
+Accept: application/vnd.github+json
+User-Agent: emacs-org-mode
+```
+
+```elisp
+;; supported fields: name, published_at
+(let ((tag-data (seq-find (lambda (release-data)
+                            (string-prefix-p "kustomize" (alist-get 'name release-data)))
+                          (json-read-from-string releases))))
+  (alist-get field tag-data))
+```
 
 ## Sops
 
@@ -46,8 +74,24 @@ The latest `sops` version can be checked here:
 
 <https://github.com/mozilla/sops/releases>
 
+```elisp
+;; supported fields: name, published_at
+(let ((tag-data (seq-find (lambda (release-data)
+                            (string-prefix-p "v" (alist-get 'name release-data)))
+                          (json-read-from-string releases))))
+  (alist-get field tag-data))
+```
+
 ## Helm
 
 The latest `Helm` version can be checked here:
 
 <https://github.com/helm/helm/releases>
+
+```elisp
+;; supported fields: name, published_at
+(let ((tag-data (seq-find (lambda (release-data)
+                            (string-prefix-p "Helm" (alist-get 'name release-data)))
+                          (json-read-from-string releases))))
+  (alist-get field tag-data))
+```
