@@ -46,7 +46,7 @@ jobs:
           echo "tag=$tag"
           # echo "::set-output name=tag::${tag}"
           # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
-          echo "{tag}={${tag}}" >> $GITHUB_OUTPUT
+          echo "tag=${tag}" >> $GITHUB_OUTPUT
       - name: Login to DockerHub
         if: github.event_name == 'release'
         uses: docker/login-action@v2
