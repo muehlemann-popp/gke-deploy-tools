@@ -73,14 +73,14 @@ The latest ~kustomize~ version can be checked here:
 https://github.com/kubernetes-sigs/kustomize/releases
 
 #+name: get-github-releases
-#+begin_src restclient :exports none :results value :var repo="kubernetes-sigs/kustomize"
+#+begin_src restclient :eval never-export :exports none :results value :var repo="kubernetes-sigs/kustomize"
   GET https://api.github.com/repos/:repo/releases
   Accept: application/vnd.github+json
   User-Agent: emacs-org-mode
 #+end_src
 
 #+name: get-latest-kustomize-release
-#+begin_src elisp :var releases=get-github-releases(repo="kubernetes-sigs/kustomize") :var field='name :results value :exports none
+#+begin_src elisp :eval never-export :var releases=get-github-releases(repo="kubernetes-sigs/kustomize") :var field='name :results value :exports none
   ;; supported fields: name, published_at
   (let ((tag-data (seq-find (lambda (release-data)
                               (string-prefix-p "kustomize" (alist-get 'name release-data)))
@@ -95,7 +95,7 @@ The latest ~sops~ version can be checked here:
 https://github.com/mozilla/sops/releases
 
 #+name: get-latest-sops-release
-#+begin_src elisp :var releases=get-github-releases(repo="mozilla/sops") :var field='name :results value :exports none
+#+begin_src elisp :exports none :eval never-export :var releases=get-github-releases(repo="mozilla/sops") :var field='name :results value
   ;; supported fields: name, published_at
   (let ((tag-data (seq-find (lambda (release-data)
                               (string-prefix-p "v" (alist-get 'name release-data)))
@@ -110,7 +110,7 @@ The latest ~Helm~ version can be checked here:
 https://github.com/helm/helm/releases
 
 #+name: get-latest-helm-release
-#+begin_src elisp :var releases=get-github-releases(repo="helm/helm") :var field='name :results value :exports none
+#+begin_src elisp :eval never-export :var releases=get-github-releases(repo="helm/helm") :var field='name :results value :exports none
   ;; supported fields: name, published_at
   (let ((tag-data (seq-find (lambda (release-data)
                               (string-prefix-p "Helm" (alist-get 'name release-data)))
@@ -120,5 +120,4 @@ https://github.com/helm/helm/releases
 
 # Local Variables:
 # org-confirm-babel-evaluate: nil
-# org-export-babel-evaluate: nil
 # End:
