@@ -1,4 +1,3 @@
-
 # Build image
 
 You can manually build the Docker image with the following command:
@@ -7,26 +6,29 @@ You can manually build the Docker image with the following command:
 docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
        --build-arg KUSTOMIZE_VERSION=4.5.7 \
        --build-arg SOPS_VERSION=3.7.3      \
-       --build-arg HELM_VERSION=3.10.1
+       --build-arg HELM_VERSION=3.10.2
 ```
+
 
 # Push image
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:latest \
-       muehlemannpopp/gke-deploy-tools:408.0.0
-docker push muehlemannpopp/gke-deploy-tools:408.0.0
+       muehlemannpopp/gke-deploy-tools:409.0.0
+docker push muehlemannpopp/gke-deploy-tools:409.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
+
 # Dependency versions
 
-| dependency   | version          | last updated               | digest                                                                  |
-|------------ |---------------- |-------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 408.0.0-alpine   | 2022-11-01T20:02:11.72889Z | sha256:f64c0f8f9a58c0821391dbb987cf567278c907c828dddc056d7f369c57177c82 |
-| kustomize    | kustomize/v4.5.7 | 2022-08-02T16:39:10Z       |                                                                         |
-| sops         | v3.7.3           | 2022-05-09T17:37:50Z       |                                                                         |
-| Helm         | Helm 3.10.1      | 2022-10-12T20:51:20Z       |                                                                         |
+| dependency   | version          | last updated                | digest                                                                  |
+|------------ |---------------- |--------------------------- |----------------------------------------------------------------------- |
+| google-cloud | 409.0.0-alpine   | 2022-11-08T21:47:27.762738Z | sha256:b20cb23b303d3b3ebde15d3b8759beac6d8e9da8b49a1e189b7843130df264e4 |
+| kustomize    | kustomize/v4.5.7 | 2022-08-02T16:39:10Z        |                                                                         |
+| sops         | v3.7.3           | 2022-05-09T17:37:50Z        |                                                                         |
+| Helm         | Helm v3.10.2     | 2022-11-10T17:13:10Z        |                                                                         |
+
 
 ## Google Cloud SDK
 
@@ -45,6 +47,7 @@ GET https://registry.hub.docker.com/v2/repositories/google/cloud-sdk/tags
                           (alist-get 'results (json-read-from-string tags)))))
   (alist-get field tag-data))
 ```
+
 
 ## Kustomize
 
@@ -66,6 +69,7 @@ User-Agent: emacs-org-mode
   (alist-get field tag-data))
 ```
 
+
 ## Sops
 
 The latest `sops` version can be checked here:
@@ -79,6 +83,7 @@ The latest `sops` version can be checked here:
                           (json-read-from-string releases))))
   (alist-get field tag-data))
 ```
+
 
 ## Helm
 
