@@ -29,8 +29,8 @@ You can manually build the Docker image with the following command:
 
 #+begin_src bash :eval never
   docker tag muehlemannpopp/gke-deploy-tools:latest \
-         muehlemannpopp/gke-deploy-tools:409.0.0
-  docker push muehlemannpopp/gke-deploy-tools:409.0.0
+         muehlemannpopp/gke-deploy-tools:410.0.0
+  docker push muehlemannpopp/gke-deploy-tools:410.0.0
   docker push muehlemannpopp/gke-deploy-tools:latest
 #+end_src
 
@@ -40,7 +40,7 @@ You can manually build the Docker image with the following command:
 #+caption: Depency versions
 | dependency   | version          | last updated                | digest                                                                  |
 |--------------+------------------+-----------------------------+-------------------------------------------------------------------------|
-| google-cloud | 409.0.0-alpine   | 2022-11-08T21:47:27.762738Z | sha256:b20cb23b303d3b3ebde15d3b8759beac6d8e9da8b49a1e189b7843130df264e4 |
+| google-cloud | 410.0.0-alpine   | 2022-11-15T19:15:33.640248Z | sha256:0cce8b6a4677749c39e3aeb7bcb783c369ee2729a3104e2d51b557356691579c |
 | kustomize    | kustomize/v4.5.7 | 2022-08-02T16:39:10Z        |                                                                         |
 | sops         | v3.7.3           | 2022-05-09T17:37:50Z        |                                                                         |
 | Helm         | Helm v3.10.2     | 2022-11-10T17:13:10Z        |                                                                         |

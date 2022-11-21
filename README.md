@@ -14,8 +14,8 @@ docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:latest \
-       muehlemannpopp/gke-deploy-tools:409.0.0
-docker push muehlemannpopp/gke-deploy-tools:409.0.0
+       muehlemannpopp/gke-deploy-tools:410.0.0
+docker push muehlemannpopp/gke-deploy-tools:410.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
@@ -24,7 +24,7 @@ docker push muehlemannpopp/gke-deploy-tools:latest
 
 | dependency   | version          | last updated                | digest                                                                  |
 |------------ |---------------- |--------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 409.0.0-alpine   | 2022-11-08T21:47:27.762738Z | sha256:b20cb23b303d3b3ebde15d3b8759beac6d8e9da8b49a1e189b7843130df264e4 |
+| google-cloud | 410.0.0-alpine   | 2022-11-15T19:15:33.640248Z | sha256:0cce8b6a4677749c39e3aeb7bcb783c369ee2729a3104e2d51b557356691579c |
 | kustomize    | kustomize/v4.5.7 | 2022-08-02T16:39:10Z        |                                                                         |
 | sops         | v3.7.3           | 2022-05-09T17:37:50Z        |                                                                         |
 | Helm         | Helm v3.10.2     | 2022-11-10T17:13:10Z        |                                                                         |
@@ -36,38 +36,12 @@ The latest base image version can be checked here:
 
 <https://hub.docker.com/r/google/cloud-sdk/tags>
 
-```restclient
-GET https://registry.hub.docker.com/v2/repositories/google/cloud-sdk/tags
-```
-
-```elisp
-;; supported fields: name, last_updated, digest
-(let ((tag-data (seq-find (lambda (tag-data)
-                            (string-suffix-p "-alpine" (alist-get 'name tag-data)))
-                          (alist-get 'results (json-read-from-string tags)))))
-  (alist-get field tag-data))
-```
-
 
 ## Kustomize
 
 The latest `kustomize` version can be checked here:
 
 <https://github.com/kubernetes-sigs/kustomize/releases>
-
-```restclient
-GET https://api.github.com/repos/:repo/releases
-Accept: application/vnd.github+json
-User-Agent: emacs-org-mode
-```
-
-```elisp
-;; supported fields: name, published_at
-(let ((tag-data (seq-find (lambda (release-data)
-                            (string-prefix-p "kustomize" (alist-get 'name release-data)))
-                          (json-read-from-string releases))))
-  (alist-get field tag-data))
-```
 
 
 ## Sops
@@ -76,25 +50,9 @@ The latest `sops` version can be checked here:
 
 <https://github.com/mozilla/sops/releases>
 
-```elisp
-;; supported fields: name, published_at
-(let ((tag-data (seq-find (lambda (release-data)
-                            (string-prefix-p "v" (alist-get 'name release-data)))
-                          (json-read-from-string releases))))
-  (alist-get field tag-data))
-```
-
 
 ## Helm
 
 The latest `Helm` version can be checked here:
 
 <https://github.com/helm/helm/releases>
-
-```elisp
-;; supported fields: name, published_at
-(let ((tag-data (seq-find (lambda (release-data)
-                            (string-prefix-p "Helm" (alist-get 'name release-data)))
-                          (json-read-from-string releases))))
-  (alist-get field tag-data))
-```
