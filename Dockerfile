@@ -1,4 +1,4 @@
-FROM google/cloud-sdk:418.0.0-alpine@sha256:2efaf225a4336e94bf0010faa5719981cdef722954271ba9eb8e3497f6100cfb
+FROM google/cloud-sdk:418.0.0-alpine@sha256:2efaf225a4336e94bf0010faa5719981cdef722954271ba9eb8e3497f6100cfb AS base
 ARG KUSTOMIZE_VERSION=5.0.0
 ARG SOPS_VERSION=3.7.3
 ARG HELM_VERSION=3.11.1
@@ -10,9 +10,9 @@ RUN tar xf /tmp/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz -C /usr/bin &
     chmod a+x /usr/bin/sops
 
 FROM google/cloud-sdk:418.0.0-alpine@sha256:2efaf225a4336e94bf0010faa5719981cdef722954271ba9eb8e3497f6100cfb
-COPY --from=0 /usr/bin/kustomize /usr/bin/kustomize
-COPY --from=0 /usr/bin/linux-amd64/helm /usr/bin/helm
-COPY --from=0 /usr/bin/sops /usr/bin/sops
+COPY --from=base /usr/bin/kustomize /usr/bin/kustomize
+COPY --from=base /usr/bin/linux-amd64/helm /usr/bin/helm
+COPY --from=base /usr/bin/sops /usr/bin/sops
 
 RUN gcloud components install gke-gcloud-auth-plugin && \
     gcloud components install kubectl                && \
