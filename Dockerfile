@@ -6,7 +6,7 @@ ADD https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv
 ADD https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz /tmp
 RUN tar xf /tmp/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz -C /usr/bin && \
     tar xf /tmp/helm-v${HELM_VERSION}-linux-amd64.tar.gz -C /usr/bin && \
-    wget --progress=dot:giga https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 -O /usr/bin/sops && \
+    wget https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 -O /usr/bin/sops && \
     chmod a+x /usr/bin/sops
 
 FROM google/cloud-sdk:418.0.0-alpine@sha256:2efaf225a4336e94bf0010faa5719981cdef722954271ba9eb8e3497f6100cfb
