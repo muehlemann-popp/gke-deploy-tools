@@ -30,8 +30,8 @@ You can manually build the Docker image with the following command:
 
 #+begin_src bash :eval never
   docker tag muehlemannpopp/gke-deploy-tools:latest \
-         muehlemannpopp/gke-deploy-tools:417.0.1
-  docker push muehlemannpopp/gke-deploy-tools:417.0.1
+         muehlemannpopp/gke-deploy-tools:418.0.0
+  docker push muehlemannpopp/gke-deploy-tools:418.0.0
   docker push muehlemannpopp/gke-deploy-tools:latest
 #+end_src
 
@@ -39,13 +39,13 @@ You can manually build the Docker image with the following command:
 
 #+tblname: dependency-versions
 #+caption: Depency versions
-| dependency   | version          | last updated                | digest                                                                  |
-|--------------+------------------+-----------------------------+-------------------------------------------------------------------------|
-| google-cloud | 417.0.1-alpine   | 2023-02-10T16:01:27.228969Z | sha256:cda720763872282990d64ab3b4e5dcc185b24de4f68e6b4e78694be4ac8a8096 |
-| kustomize    | kustomize/v5.0.0 | 2023-02-02T17:19:31Z        |                                                                         |
-| sops         | v3.7.3           | 2022-05-09T17:37:50Z        |                                                                         |
-| Helm         | Helm v3.11.1     | 2023-02-08T18:02:00Z        |                                                                         |
-#+TBLFM: @2$2='(org-sbe get-latest-cloud-sdk-tag (field 'name))::@2$3='(org-sbe get-latest-cloud-sdk-tag (field 'last_updated))::@2$4='(org-sbe get-latest-cloud-sdk-tag (field 'digest))::@3$2='(org-sbe get-latest-kustomize-release (field 'name))::@3$3='(org-sbe get-latest-kustomize-release (field 'published_at))::@4$2='(org-sbe get-latest-sops-release (field 'name))::@4$3='(org-sbe get-latest-sops-release (field 'published_at))::@5$2='(org-sbe get-latest-helm-release (field 'name))::@5$3='(org-sbe get-latest-helm-release (field 'published_at))
+| dependency   |        version | last updated                | digest                                                                  |
+|--------------+----------------+-----------------------------+-------------------------------------------------------------------------|
+| google-cloud | 418.0.0-alpine | 2023-02-14T21:28:22.381384Z | sha256:2efaf225a4336e94bf0010faa5719981cdef722954271ba9eb8e3497f6100cfb |
+| kustomize    |          5.0.0 | 2023-02-02T17:19:31Z        |                                                                         |
+| sops         |          3.7.3 | 2022-05-09T17:37:50Z        |                                                                         |
+| Helm         |         3.11.1 | 2023-02-08T18:02:00Z        |                                                                         |
+#+TBLFM: @2$2='(org-sbe get-latest-cloud-sdk-tag (field 'name))::@2$3='(org-sbe get-latest-cloud-sdk-tag (field 'last_updated))::@2$4='(org-sbe get-latest-cloud-sdk-tag (field 'digest))::@3$2='(org-sbe get-latest-kustomize-release (field 'name) (matcher "\"kustomize/v\\\\(.*\\\\)$\""))::@3$3='(org-sbe get-latest-kustomize-release (field 'published_at))::@4$2='(org-sbe get-latest-sops-release (field 'name) (matcher "\"v\\\\(.*\\\\)$\""))::@4$3='(org-sbe get-latest-sops-release (field 'published_at))::@5$2='(org-sbe get-latest-helm-release (field 'name) (matcher "\"Helm v\\\\(.*\\\\)$\""))::@5$3='(org-sbe get-latest-helm-release (field 'published_at))
 ** Google Cloud SDK
 
 The latest base image version can be checked here:
@@ -58,12 +58,17 @@ https://hub.docker.com/r/google/cloud-sdk/tags
 #+end_src
 
 #+name: get-latest-cloud-sdk-tag
-#+begin_src elisp :var tags=get-cloud-sdk-tags() :var field='name :results value :exports none
+#+begin_src elisp :var tags=get-cloud-sdk-tags() :var field='name :var matcher='nil :results value :exports none
   ;; supported fields: name, last_updated, digest
-  (let ((tag-data (seq-find (lambda (tag-data)
-                              (string-suffix-p "-alpine" (alist-get 'name tag-data)))
-                            (alist-get 'results (json-read-from-string tags)))))
-    (alist-get field tag-data))
+  (let* ((tag-data (seq-find (lambda (tag-data)
+			       (string-suffix-p "-alpine" (alist-get 'name tag-data)))
+			     (alist-get 'results (json-read-from-string tags))))
+	 (field-tag-data (alist-get field tag-data)))
+    (if matcher
+	(progn
+	  (string-match matcher field-tag-data)
+	  (match-string 0))
+	field-tag-data))
 #+end_src
 
 ** Kustomize
@@ -80,12 +85,14 @@ https://github.com/kubernetes-sigs/kustomize/releases
 #+end_src
 
 #+name: get-latest-kustomize-release
-#+begin_src elisp :eval never-export :var releases=get-github-releases(repo="kubernetes-sigs/kustomize") :var field='name :results value :exports none
+#+begin_src elisp :eval never-export :var releases=get-github-releases(repo="kubernetes-sigs/kustomize") :var field='name :var matcher="\\(.*\\)" :results value :exports none
   ;; supported fields: name, published_at
-  (let ((tag-data (seq-find (lambda (release-data)
-                              (string-prefix-p "kustomize" (alist-get 'name release-data)))
-                            (json-read-from-string releases))))
-    (alist-get field tag-data))
+  (let* ((tag-data (seq-find (lambda (release-data)
+			       (string-prefix-p "kustomize" (alist-get 'name release-data)))
+			     (json-read-from-string releases)))
+	 (field-tag-data (alist-get field tag-data)))
+    (string-match matcher field-tag-data)
+    (match-string 1 field-tag-data))
 #+end_src
 
 ** Sops
@@ -95,12 +102,14 @@ The latest ~sops~ version can be checked here:
 https://github.com/mozilla/sops/releases
 
 #+name: get-latest-sops-release
-#+begin_src elisp :exports none :eval never-export :var releases=get-github-releases(repo="mozilla/sops") :var field='name :results value
+#+begin_src elisp :exports none :eval never-export :var releases=get-github-releases(repo="mozilla/sops") :var field='name :var matcher="\\(.*\\)" :results value
   ;; supported fields: name, published_at
-  (let ((tag-data (seq-find (lambda (release-data)
-                              (string-prefix-p "v" (alist-get 'name release-data)))
-                            (json-read-from-string releases))))
-    (alist-get field tag-data))
+  (let* ((tag-data (seq-find (lambda (release-data)
+			       (string-prefix-p "v" (alist-get 'name release-data)))
+			     (json-read-from-string releases)))
+	(field-tag-data (alist-get field tag-data)))
+    (string-match matcher field-tag-data)
+    (match-string 1 field-tag-data))
 #+end_src
 
 ** Helm
@@ -110,12 +119,14 @@ The latest ~Helm~ version can be checked here:
 https://github.com/helm/helm/releases
 
 #+name: get-latest-helm-release
-#+begin_src elisp :eval never-export :var releases=get-github-releases(repo="helm/helm") :var field='name :results value :exports none
+#+begin_src elisp :eval never-export :var releases=get-github-releases(repo="helm/helm") :var field='name :var matcher="\\(.*\\)" :results value :exports none
   ;; supported fields: name, published_at
-  (let ((tag-data (seq-find (lambda (release-data)
-                              (string-prefix-p "Helm" (alist-get 'name release-data)))
-                            (json-read-from-string releases))))
-    (alist-get field tag-data))
+  (let* ((tag-data (seq-find (lambda (release-data)
+			       (string-prefix-p "Helm" (alist-get 'name release-data)))
+			     (json-read-from-string releases)))
+	 (field-tag-data (alist-get field tag-data)))
+    (string-match matcher field-tag-data)
+    (match-string 1 field-tag-data))
 #+end_src
 
 # Local Variables:

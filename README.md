@@ -14,20 +14,20 @@ docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:latest \
-       muehlemannpopp/gke-deploy-tools:417.0.1
-docker push muehlemannpopp/gke-deploy-tools:417.0.1
+       muehlemannpopp/gke-deploy-tools:418.0.0
+docker push muehlemannpopp/gke-deploy-tools:418.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
 
 # Dependency versions
 
-| dependency   | version          | last updated                | digest                                                                  |
-|------------ |---------------- |--------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 417.0.1-alpine   | 2023-02-10T16:01:27.228969Z | sha256:cda720763872282990d64ab3b4e5dcc185b24de4f68e6b4e78694be4ac8a8096 |
-| kustomize    | kustomize/v5.0.0 | 2023-02-02T17:19:31Z        |                                                                         |
-| sops         | v3.7.3           | 2022-05-09T17:37:50Z        |                                                                         |
-| Helm         | Helm v3.11.1     | 2023-02-08T18:02:00Z        |                                                                         |
+| dependency   | version        | last updated                | digest                                                                  |
+|------------ |-------------- |--------------------------- |----------------------------------------------------------------------- |
+| google-cloud | 418.0.0-alpine | 2023-02-14T21:28:22.381384Z | sha256:2efaf225a4336e94bf0010faa5719981cdef722954271ba9eb8e3497f6100cfb |
+| kustomize    | 5.0.0          | 2023-02-02T17:19:31Z        |                                                                         |
+| sops         | 3.7.3          | 2022-05-09T17:37:50Z        |                                                                         |
+| Helm         | 3.11.1         | 2023-02-08T18:02:00Z        |                                                                         |
 
 
 ## Google Cloud SDK
