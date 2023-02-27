@@ -38,14 +38,37 @@ You can manually build the Docker image with the following command:
 * Dependency versions
 
 #+tblname: dependency-versions
-#+caption: Depency versions
-| dependency   |        version | last updated                | digest                                                                  |
-|--------------+----------------+-----------------------------+-------------------------------------------------------------------------|
-| google-cloud | 418.0.0-alpine | 2023-02-14T21:28:22.381384Z | sha256:2efaf225a4336e94bf0010faa5719981cdef722954271ba9eb8e3497f6100cfb |
-| kustomize    |          5.0.0 | 2023-02-02T17:19:31Z        |                                                                         |
-| sops         |          3.7.3 | 2022-05-09T17:37:50Z        |                                                                         |
-| Helm         |         3.11.1 | 2023-02-08T18:02:00Z        |                                                                         |
+#+name: dependency-versions
+#+caption: Dependency versions
+| dependency   |        version | last updated               | digest                                                                  |
+|--------------+----------------+----------------------------+-------------------------------------------------------------------------|
+| google-cloud | 419.0.0-alpine | 2023-02-22T16:13:06.29934Z | sha256:e8c6e1e5831b850b33ae5454763300df0617bc8c758b7fcbb979e9e1d6ddb1f8 |
+| kustomize    |          5.0.0 | 2023-02-02T17:19:31Z       |                                                                         |
+| sops         |          3.7.3 | 2022-05-09T17:37:50Z       |                                                                         |
+| Helm         |         3.11.1 | 2023-02-08T18:02:00Z       |                                                                         |
 #+TBLFM: @2$2='(org-sbe get-latest-cloud-sdk-tag (field 'name))::@2$3='(org-sbe get-latest-cloud-sdk-tag (field 'last_updated))::@2$4='(org-sbe get-latest-cloud-sdk-tag (field 'digest))::@3$2='(org-sbe get-latest-kustomize-release (field 'name) (matcher "\"kustomize/v\\\\(.*\\\\)$\""))::@3$3='(org-sbe get-latest-kustomize-release (field 'published_at))::@4$2='(org-sbe get-latest-sops-release (field 'name) (matcher "\"v\\\\(.*\\\\)$\""))::@4$3='(org-sbe get-latest-sops-release (field 'published_at))::@5$2='(org-sbe get-latest-helm-release (field 'name) (matcher "\"Helm v\\\\(.*\\\\)$\""))::@5$3='(org-sbe get-latest-helm-release (field 'published_at))
+
+** Generate Dockerfile                                             :noexport:
+
+#+begin_src bash :results output :var CLOUD_SDK_BASE_IMAGE=(org-table-get-remote-range "dependency-versions" "@2$2") :var CLOUD_SDK_BASE_IMAGE_HASH=(org-table-get-remote-range "dependency-versions" "@2$4") :var KUSTOMIZE_VER=(org-table-get-remote-range "dependency-versions" "@3$2") :var SOPS_VER=(org-table-get-remote-range "dependency-versions" "@4$2") :var HELM_VER=(org-table-get-remote-range "dependency-versions" "@5$2"))
+  echo "base image=${CLOUD_SDK_BASE_IMAGE}:${CLOUD_SDK_BASE_IMAGE_HASH}"
+  echo "kustomize=${KUSTOMIZE_VER}"
+  echo "sops=${SOPS_VER}"
+  echo "helm=${HELM_VER}"
+  export CLOUD_SDK_BASE_IMAGE
+  export CLOUD_SDK_BASE_IMAGE_HASH
+  export KUSTOMIZE_VER
+  export SOPS_VER
+  export HELM_VER
+  dockerfile-generator
+#+end_src
+
+#+RESULTS:
+: base image=419.0.0-alpine:sha256:e8c6e1e5831b850b33ae5454763300df0617bc8c758b7fcbb979e9e1d6ddb1f8
+: kustomize=5.0.0
+: sops=3.7.3
+: helm=3.11.1
+
 ** Google Cloud SDK
 
 The latest base image version can be checked here:
