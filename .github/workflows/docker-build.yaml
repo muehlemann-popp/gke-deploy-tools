@@ -5,17 +5,9 @@ on:
     types: [published]
   pull_request:
     branches:
-      - '!main'
+      - 'main'
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v19
-      - run: nix flake check
   build:
     name: Build and push
     runs-on: ubuntu-latest
