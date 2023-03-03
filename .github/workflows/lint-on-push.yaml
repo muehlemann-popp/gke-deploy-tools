@@ -2,8 +2,8 @@ name: Linting
 
 on:
   push:
-    branches:
-      - '!main'
+    branches-ignore:
+      - 'main'
 jobs:
   lint:
     name: Lint
