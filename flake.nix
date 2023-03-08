@@ -245,13 +245,19 @@
         (pkgs.runCommand "hadolint" { buildInputs = [ pkgs.hadolint ]; } ''
           hadolint ${self}/Dockerfile --ignore DL3047 > $out
         '');
-      devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = [
-          dockerfile-generator
-          git-create-pr
-          get-cloud-sdk-script
-          new-release
-        ] ++ get-release-scripts;
+      devShells.x86_64-linux = {
+        default = pkgs.mkShell {
+          packages = [
+            dockerfile-generator
+            git-create-pr
+            get-cloud-sdk-script
+            new-release
+          ] ++ get-release-scripts;
+        };
+        git-create-pr =
+          pkgs.mkShell { packages = [ git-create-pr ]; };
+        new-release =
+          pkgs.mkShell { packages = [ new-release ]; };
       };
     };
 }

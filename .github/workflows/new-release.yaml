@@ -15,4 +15,4 @@ jobs:
         with:
           token: ${{ secrets.TOKEN }}
       - uses: cachix/install-nix-action@v20
-      - run: nix develop -c new-release
+      - run: nix develop .#new-release -c new-release

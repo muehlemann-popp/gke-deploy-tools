@@ -16,4 +16,4 @@ jobs:
         with:
           token: ${{ secrets.TOKEN }}
       - uses: cachix/install-nix-action@v20
-      - run: nix develop -c git-create-pr
+      - run: nix develop .#git-create-pr -c git-create-pr
