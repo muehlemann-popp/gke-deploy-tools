@@ -231,14 +231,27 @@
           git branch --delete "''${branch_name}"
         '';
       };
+      new-release = pkgs.writeShellApplication {
+        name = "new-release";
+        runtimeInputs = with pkgs; [ gh ];
+        text = ''
+          release_id="v$(head -n 1 Dockerfile | sed 's|^FROM google/cloud-sdk:\([0-9\\.]*\)-alpine.*$|\1|')"
+          echo "Creating release: ''${release_id}"
+          gh release create "''${release_id}" --generate-notes --title "''${release_id}"
+        '';
+      };
     in {
       checks.x86_64-linux.dockerfile-linting =
         (pkgs.runCommand "hadolint" { buildInputs = [ pkgs.hadolint ]; } ''
           hadolint ${self}/Dockerfile --ignore DL3047 > $out
         '');
       devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = [ dockerfile-generator git-create-pr get-cloud-sdk-script ]
-          ++ get-release-scripts;
+        packages = [
+          dockerfile-generator
+          git-create-pr
+          get-cloud-sdk-script
+          new-release
+        ] ++ get-release-scripts;
       };
     };
 }

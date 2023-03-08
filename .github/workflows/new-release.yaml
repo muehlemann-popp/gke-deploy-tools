@@ -1,0 +1,18 @@
+name: Create a new release
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  new-release:
+    name: Creating a new release
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.TOKEN }}
+      - uses: cachix/install-nix-action@v20
+      - run: nix develop -c new-release
