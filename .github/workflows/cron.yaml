@@ -3,7 +3,7 @@ on:
     - cron: '30 5 * * *'
 jobs:
   build:
-    name: Image scane
+    name: Image scan
     runs-on: ubuntu-latest
     steps:
       - name: Run Trivy vulnerability scanner

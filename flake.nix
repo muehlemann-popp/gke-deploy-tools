@@ -1,4 +1,8 @@
 {
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
+
   outputs = { self, nixpkgs }:
     let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -240,6 +244,42 @@
           gh release create "''${release_id}" --generate-notes --title "''${release_id}"
         '';
       };
+      nix-update = pkgs.writeShellApplication {
+        name = "nix-update";
+        runtimeInputs = with pkgs; [ nix git gh ];
+        text = ''
+          current_branch_name=$(git branch --show-current)
+          branch_name=$(date -u +%Y_%m_%d_%H_%M_%S)
+
+          echo "Creating git branch ''${branch_name}"
+          git checkout -b "''${branch_name}"
+
+          echo "Updating nix inputs"
+          nix flake update
+
+          echo "Checking"
+          nix flake check
+
+          echo "Diffing the changes"
+          if git diff --exit-code; then
+            echo "We did not change the code"
+          else
+            echo "We changed the code"
+            git config user.name "nix-flake-updater"
+            git config user.email "nix-flake-updater@github.actions"
+            git commit -a -m "Code changes from nix-flake-updater"
+            git push --set-upstream origin "''${branch_name}"
+            gh pr create --title "Automated nix flake update"                           \
+                         --body "Nix flake inputs are updated" \
+                         --label "dependencies"
+          fi
+
+          echo "Switching back to ''${current_branch_name}"
+          git switch "''${current_branch_name}"
+          echo "Deleting ''${branch_name} branch"
+          git branch --delete "''${branch_name}"
+        '';
+      };
     in {
       checks.x86_64-linux.dockerfile-linting =
         (pkgs.runCommand "hadolint" { buildInputs = [ pkgs.hadolint ]; } ''
@@ -252,12 +292,15 @@
             git-create-pr
             get-cloud-sdk-script
             new-release
+            nix-update
           ] ++ get-release-scripts;
         };
         git-create-pr =
           pkgs.mkShell { packages = [ git-create-pr ]; };
         new-release =
           pkgs.mkShell { packages = [ new-release ]; };
+        nix-update =
+          pkgs.mkShell { packages = [ nix-update ]; };
       };
     };
 }
