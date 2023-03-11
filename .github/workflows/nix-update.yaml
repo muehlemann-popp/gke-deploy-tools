@@ -1,0 +1,19 @@
+name: Update nix flake
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 4 * * 1'
+jobs:
+  updating-nix:
+    name: Updating nix flake
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.TOKEN }}
+      - uses: cachix/install-nix-action@v20
+      - run: nix develop .#nix-update -c nix-update
