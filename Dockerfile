@@ -1,5 +1,5 @@
 FROM google/cloud-sdk:421.0.0-alpine@sha256:f93f33673242a5a5b6b6e5f947502097d5998e34767945db1055f6d73ca744e4 AS base
-ARG KUSTOMIZE_VERSION=5.0.0
+ARG KUSTOMIZE_VERSION=5.0.1
 ARG SOPS_VERSION=3.7.3
 ARG HELM_VERSION=3.11.2
 ADD https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz /tmp
