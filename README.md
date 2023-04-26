@@ -13,8 +13,8 @@ docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:latest \
-       muehlemannpopp/gke-deploy-tools:427.0.0
-docker push muehlemannpopp/gke-deploy-tools:427.0.0
+       muehlemannpopp/gke-deploy-tools:428.0.0
+docker push muehlemannpopp/gke-deploy-tools:428.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
@@ -23,7 +23,7 @@ docker push muehlemannpopp/gke-deploy-tools:latest
 
 | dependency   | version        | last updated               | digest                                                                  |
 |------------ |-------------- |-------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 427.0.0-alpine | 2023-04-18T17:58:05.504255Z | sha256:6469988223533e79dd9d25fc224c8662f4ffa9285aae770d4060dab1b1449515 |
+| google-cloud | 428.0.0-alpine | 2023-04-25T22:58:46.350451Z | sha256:b2a19833b11676876402f63f39c03f4e06b598e30dec5bd6173527c23b4d53c7 |
 | kustomize    | 5.0.1 | 2023-03-14T01:41:45Z |                                                                         |
 | sops         | 3.7.3          | 2022-05-09T17:37:50Z       |                                                                         |
 | Helm         | 3.11.3         | 2023-04-12T18:38:13Z       |                                                                         |
