@@ -1,7 +1,5 @@
 {
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
+  inputs = { nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; };
 
   outputs = { self, nixpkgs }:
     let
@@ -15,7 +13,7 @@
         ADD https://get.helm.sh/helm-v''${HELM_VERSION}-linux-amd64.tar.gz /tmp
         RUN tar xf /tmp/kustomize_v''${KUSTOMIZE_VERSION}_linux_amd64.tar.gz -C /usr/bin && \
             tar xf /tmp/helm-v''${HELM_VERSION}-linux-amd64.tar.gz -C /usr/bin && \
-            wget https://github.com/mozilla/sops/releases/download/v''${SOPS_VERSION}/sops-v''${SOPS_VERSION}.linux.amd64 -O /usr/bin/sops && \
+            wget https://github.com/getsops/sops/releases/download/v''${SOPS_VERSION}/sops-v''${SOPS_VERSION}.linux.amd64 -O /usr/bin/sops && \
             chmod a+x /usr/bin/sops
 
         FROM google/cloud-sdk:''${CLOUD_SDK_BASE_IMAGE}@''${CLOUD_SDK_BASE_IMAGE_HASH}
@@ -80,7 +78,7 @@
 
         The latest `sops` version can be checked here:
 
-        <https://github.com/mozilla/sops/releases>
+        <https://github.com/getsops/sops/releases>
 
 
         ## Helm
@@ -191,7 +189,7 @@
           transform-regex = "^kustomize/v(.*)";
         };
         sops = {
-          repo = "mozilla/sops";
+          repo = "getsops/sops";
           filter-regex = "^v";
           transform-regex = "^v(.*)";
         };
@@ -295,12 +293,9 @@
             nix-update
           ] ++ get-release-scripts;
         };
-        git-create-pr =
-          pkgs.mkShell { packages = [ git-create-pr ]; };
-        new-release =
-          pkgs.mkShell { packages = [ new-release ]; };
-        nix-update =
-          pkgs.mkShell { packages = [ nix-update ]; };
+        git-create-pr = pkgs.mkShell { packages = [ git-create-pr ]; };
+        new-release = pkgs.mkShell { packages = [ new-release ]; };
+        nix-update = pkgs.mkShell { packages = [ nix-update ]; };
       };
     };
 }
