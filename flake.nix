@@ -104,7 +104,7 @@
 
           #TOOL_VER=$(sed '$CLOUD_SDK_BASE_IMAGE/-alpine//g'")
           TOOL_VER="''${CLOUD_SDK_BASE_IMAGE//-alpine/}"
-          export TOOL_VER          
+          export TOOL_VER
 
           kustomize=$(get-kustomize-release)
           KUSTOMIZE_VER=$(jq -r '.name' <<<"$kustomize" )
@@ -135,16 +135,16 @@
           echo "HELM_VER=''${HELM_VER}"
           echo "HELM_DATE=''${HELM_DATE}"
 
-          # shellcheck disable=SC2016 
+          # shellcheck disable=SC2016
           envsubst '
           ''${CLOUD_SDK_BASE_IMAGE}
           ''${CLOUD_SDK_BASE_IMAGE_HASH}
           ''${KUSTOMIZE_VER}
           ''${SOPS_VER}
           ''${HELM_VER}
-          ' <${dockerfile-template} >Dockerfile 
+          ' <${dockerfile-template} >Dockerfile
 
-          # shellcheck disable=SC2016 
+          # shellcheck disable=SC2016
           envsubst '
           ''${CLOUD_SDK_BASE_IMAGE}
           ''${CLOUD_SDK_BASE_IMAGE_HASH}
@@ -156,7 +156,7 @@
           ''${SOPS_DATE}
           ''${HELM_VER}
           ''${HELM_DATE}
-          ' <${readme-template} >README.md 
+          ' <${readme-template} >README.md
         '';
       };
 
@@ -190,7 +190,7 @@
         };
         sops = {
           repo = "getsops/sops";
-          filter-regex = "^v";
+          filter-regex = "^v[0-9]+\\\\.[0-9]+\\\\.[0-9]+$";
           transform-regex = "^v(.*)";
         };
       };
