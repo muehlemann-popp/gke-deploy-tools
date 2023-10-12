@@ -5,7 +5,7 @@ You can manually build the Docker image with the following command:
 ```bash
 docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
        --build-arg KUSTOMIZE_VERSION=5.1.1 \
-       --build-arg SOPS_VERSION=3.8.0 \
+       --build-arg SOPS_VERSION=3.8.1 \
        --build-arg HELM_VERSION=3.13.0
 ```
 
@@ -23,9 +23,9 @@ docker push muehlemannpopp/gke-deploy-tools:latest
 
 | dependency   | version        | last updated               | digest                                                                  |
 |------------ |-------------- |-------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 450.0.0-alpine | 2023-10-10T15:28:22.309773Z | sha256:cbd5227a6b73345f72f7bb6ee04be147f443080dc0cc43052aef63642d5ff47c |
+| google-cloud | 450.0.0-alpine | 2023-10-11T10:55:28.956827Z | sha256:b2ec3cfa2fc62418a6e39f61649ee95772b9235e8498cbd1cc5c239ad179e618 |
 | kustomize    | 5.1.1 | 2023-07-31T17:20:01Z |                                                                         |
-| sops         | 3.8.0          | 2023-09-15T13:52:37Z       |                                                                         |
+| sops         | 3.8.1          | 2023-10-11T15:25:32Z       |                                                                         |
 | Helm         | 3.13.0         | 2023-09-27T20:51:15Z       |                                                                         |
 
 
