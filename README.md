@@ -6,15 +6,15 @@ You can manually build the Docker image with the following command:
 docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
        --build-arg KUSTOMIZE_VERSION=5.3.0 \
        --build-arg SOPS_VERSION=3.8.1 \
-       --build-arg HELM_VERSION=3.13.3
+       --build-arg HELM_VERSION=3.14.0
 ```
 
 # Push image
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:latest \
-       muehlemannpopp/gke-deploy-tools:459.0.0
-docker push muehlemannpopp/gke-deploy-tools:459.0.0
+       muehlemannpopp/gke-deploy-tools:460.0.0
+docker push muehlemannpopp/gke-deploy-tools:460.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
@@ -23,10 +23,10 @@ docker push muehlemannpopp/gke-deploy-tools:latest
 
 | dependency   | version        | last updated               | digest                                                                  |
 |------------ |-------------- |-------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 459.0.0-alpine | 2024-01-10T21:50:14.1579Z | sha256:1056b51989343fa38dd992f0ab547f8d31621fe7365573e9b5c0f749de7fc003 |
+| google-cloud | 460.0.0-alpine | 2024-01-17T21:48:41.451748Z | sha256:88f5c8d60a9c78065671d879209f535268f8fa111f908c1b7769081a97e33332 |
 | kustomize    | 5.3.0 | 2023-12-07T10:53:09Z |                                                                         |
 | sops         | 3.8.1          | 2023-10-11T15:25:32Z       |                                                                         |
-| Helm         | 3.13.3         | 2023-12-13T21:41:49Z       |                                                                         |
+| Helm         | 3.14.0         | 2024-01-17T19:33:36Z       |                                                                         |
 
 
 ## Google Cloud SDK
