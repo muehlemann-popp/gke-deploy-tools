@@ -23,7 +23,7 @@ docker push muehlemannpopp/gke-deploy-tools:latest
 
 | dependency   | version        | last updated               | digest                                                                  |
 |------------ |-------------- |-------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 460.0.0-alpine | 2024-01-17T21:48:41.451748Z | sha256:88f5c8d60a9c78065671d879209f535268f8fa111f908c1b7769081a97e33332 |
+| google-cloud | 460.0.0-alpine | 2024-01-19T11:50:18.656343Z | sha256:be41abc0eb50f8938ba5794ba99fec8e3c4c8f082fb4db3c96125b3c2b13503d |
 | kustomize    | 5.3.0 | 2023-12-07T10:53:09Z |                                                                         |
 | sops         | 3.8.1          | 2023-10-11T15:25:32Z       |                                                                         |
 | Helm         | 3.14.0         | 2024-01-17T19:33:36Z       |                                                                         |
