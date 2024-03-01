@@ -91,7 +91,7 @@
       dockerfile-generator = pkgs.writeShellApplication {
         name = "dockerfile-generator";
         runtimeInputs = [ pkgs.gettext pkgs.jq get-cloud-sdk-script ]
-          ++ get-release-scripts;
+                        ++ get-release-scripts;
         text = ''
 
           cloud_sdk=$(get-cloud-sdk-release)
@@ -198,11 +198,19 @@
       get-release-scripts = builtins.map (name:
         let value = builtins.getAttr name get-release-scripts-data;
         in get-release-script name value.repo value.filter-regex
-        value.transform-regex) (builtins.attrNames get-release-scripts-data);
+          value.transform-regex) (builtins.attrNames get-release-scripts-data);
+
+      update-dependencies = pkgs.writeShellApplication {
+        name = "update-dependencies";
+        runtimeInputs = with pkgs; [ gh gettext nushell ];
+        text = ''
+          nu -n -c 'use ${./lib.nu} *; update-dependencies'
+        '';
+      };
 
       git-create-pr = pkgs.writeShellApplication {
         name = "git-create-pr";
-        runtimeInputs = with pkgs; [ git gh dockerfile-generator ];
+        runtimeInputs = with pkgs; [ git gh update-dependencies ];
         text = ''
           current_branch_name=$(git branch --show-current)
           branch_name=$(date -u +%Y_%m_%d_%H_%M_%S)
@@ -211,7 +219,7 @@
           git checkout -b "''${branch_name}"
 
           echo "Generating Dockerfile and README"
-          dockerfile-generator
+          update-dependencies
 
           echo "Diffing the changes"
           if git diff --exit-code; then
@@ -286,6 +294,9 @@
       devShells.x86_64-linux = {
         default = pkgs.mkShell {
           packages = [
+            pkgs.nushell
+            pkgs.gh
+            pkgs.gettext
             dockerfile-generator
             git-create-pr
             get-cloud-sdk-script
