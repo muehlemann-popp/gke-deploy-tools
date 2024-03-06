@@ -13,20 +13,20 @@ docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
 
 ```bash
 docker tag muehlemannpopp/gke-deploy-tools:latest \
-       muehlemannpopp/gke-deploy-tools:466.0.0
-docker push muehlemannpopp/gke-deploy-tools:466.0.0
+       muehlemannpopp/gke-deploy-tools:467.0.0
+docker push muehlemannpopp/gke-deploy-tools:467.0.0
 docker push muehlemannpopp/gke-deploy-tools:latest
 ```
 
 
 # Dependency versions
 
-| dependency   | version        | last updated               | digest                                                                  |
-|------------ |-------------- |-------------------------- |----------------------------------------------------------------------- |
-| google-cloud | 466.0.0-alpine | 2024-02-27T20:58:50.047956Z | sha256:a7424f73d65627de66b5070443e748106d2e6cc269a71121fbd7323085bccf5f |
-| kustomize    | 5.3.0 | 2023-12-07T10:53:09Z |                                                                         |
-| sops         | 3.8.1          | 2023-10-11T15:25:32Z       |                                                                         |
-| Helm         | 3.14.2         | 2024-02-21T20:39:45Z       |                                                                         |
+| dependency   | version                 | last updated                 | digest                       |
+|--------------|-------------------------|------------------------------|------------------------------|
+| google-cloud | 467.0.0-alpine | 2024-03-06T11:57:10.327362Z | sha256:28e3bac7e891d469b2bef8e524968ee8236d5ff1793ea097ef7f90fe65fe69bf |
+| kustomize    | 5.3.0        | 2023-12-07T10:53:09Z            |                              |
+| sops         | 3.8.1             | 2023-10-11T15:25:32Z                 |                              |
+| Helm         | 3.14.2             | 2024-02-21T20:39:45Z                 |                              |
 
 
 ## Google Cloud SDK
