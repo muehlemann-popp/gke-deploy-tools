@@ -37,7 +37,8 @@
             git push --set-upstream origin "''${branch_name}"
             gh pr create --title "Automated dependency bumping"                           \
                          --body "Dependencies are updated by dockerfile-generator script" \
-                         --label "dependencies"
+                         --label "dependencies"                                           \
+                         --assignee "@me"
           fi
 
           echo "Switching back to ''${current_branch_name}"
