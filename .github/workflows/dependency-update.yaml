@@ -15,5 +15,5 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TOKEN }}
-      - uses: cachix/install-nix-action@v25
+      - uses: cachix/install-nix-action@v26
       - run: nix develop .#git-create-pr -c git-create-pr
