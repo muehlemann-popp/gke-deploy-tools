@@ -30,7 +30,7 @@ def "github-release" (release_name: string@release-names) {
 }
 
 def "cloud-sdk-release" () {
-  let latest_release = http get 'https://registry.hub.docker.com/v2/repositories/google/cloud-sdk/tags' | get results | where name =~ '.*-alpine$' | get 0
+  let latest_release = http get 'https://registry.hub.docker.com/v2/namespaces/google/repositories/cloud-sdk/tags?page_size=30' | get results | where name =~ '.*-alpine$' | get 0
   {
     image_tag: $latest_release.name
     published_at: $latest_release.tag_last_pushed
