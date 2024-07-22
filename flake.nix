@@ -38,7 +38,8 @@
             gh pr create --title "Automated dependency bumping"                           \
                          --body "Dependencies are updated by dockerfile-generator script" \
                          --label "dependencies"                                           \
-                         --assignee "@me"
+                         --assignee "@me"                                                 \
+                         --reviewer "szamuboy"
           fi
 
           echo "Switching back to ''${current_branch_name}"
