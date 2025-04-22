@@ -51,6 +51,8 @@ jobs:
           load: ${{ github.event_name != 'release' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   configscan:
     name: Configuration Scan
