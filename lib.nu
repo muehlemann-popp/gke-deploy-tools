@@ -2,7 +2,7 @@ const github_releases = {
   helm: {
     repo: 'helm/helm'
     filter_regex: '^Helm'
-    transform_regex: '^Helm v?(?<version>[0-9\.]+)$'
+    transform_regex: '^Helm v?(?<version>[0-9\.]+).*$'
   }
   kustomize: {
     repo: 'kubernetes-sigs/kustomize'
