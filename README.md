@@ -35,6 +35,7 @@ The latest base image version can be checked here:
 
 <https://hub.docker.com/r/google/cloud-sdk/tags>
 
+
 ## Kustomize
 
 The latest `kustomize` version can be checked here:
