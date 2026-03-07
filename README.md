@@ -6,7 +6,7 @@ You can manually build the Docker image with the following command:
 docker buildx build . -t muehlemannpopp/gke-deploy-tools:latest \
        --build-arg KUSTOMIZE_VERSION=5.8.1 \
        --build-arg SOPS_VERSION=3.12.1 \
-       --build-arg HELM_VERSION=4.1.1
+       --build-arg HELM_VERSION=3.17.4
 ```
 
 # Push image
@@ -26,7 +26,7 @@ docker push muehlemannpopp/gke-deploy-tools:latest
 | google-cloud | 559.0.0-alpine | 2026-03-03T15:27:52.351987Z | sha256:a0404b8b22866fdad7541ccb2e83b8d87f9cf0d4c47c5c3c1597c58b445d9e29 |
 | kustomize    | 5.8.1        | 2026-02-09T16:40:16Z            |                              |
 | sops         | 3.12.1             | 2026-02-22T07:45:09Z                 |                              |
-| Helm         | 4.1.1             | 2026-02-09T18:33:58Z                 |                              |
+| Helm         | 3.17.4             | 2025-07-16T19:30:02Z                 |                              |
 
 
 ## Google Cloud SDK

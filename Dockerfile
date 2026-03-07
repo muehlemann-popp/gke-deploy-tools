@@ -1,7 +1,7 @@
 FROM google/cloud-sdk:559.0.0-alpine@sha256:a0404b8b22866fdad7541ccb2e83b8d87f9cf0d4c47c5c3c1597c58b445d9e29 AS base
 ARG KUSTOMIZE_VERSION=5.8.1
 ARG SOPS_VERSION=3.12.1
-ARG HELM_VERSION=4.1.1
+ARG HELM_VERSION=3.17.4
 ADD https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz /tmp
 ADD https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz /tmp
 RUN tar xf /tmp/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz -C /usr/bin && \

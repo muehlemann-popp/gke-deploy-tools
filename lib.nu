@@ -1,7 +1,7 @@
 const github_releases = {
   helm: {
     repo: 'helm/helm'
-    filter_regex: '^Helm'
+    filter_regex: '^Helm v?3\.'
     transform_regex: '^Helm v?(?<version>[0-9\.]+).*$'
   }
   kustomize: {
